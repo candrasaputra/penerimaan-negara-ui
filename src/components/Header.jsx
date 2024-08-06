@@ -45,7 +45,7 @@ const Header = () => {
     </Container>
 
     <div className="d-flex">
-      <Button variant="light" onClick={() => handleLogout()}>Logout</Button>
+      <Button variant="light" onClick={() => handleLogout()}>Keluar</Button>
     </div>
   </Navbar>
 );

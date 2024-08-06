@@ -26,7 +26,7 @@ function DashboardLayout({ children }) {
   return (
     <>
         <Header />
-        <Container>
+        <Container className='pt-4'>
             {children}
         </Container>
     </>

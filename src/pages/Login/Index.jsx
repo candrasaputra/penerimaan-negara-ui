@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col, Alert } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
+
 import {
     login,
     getAuthStatus,
-} from '../store/reducer/authReducer';
-import { useNavigate } from "react-router-dom";
+} from '../../store/reducer/authReducer';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const dispatch = useDispatch();
     const authStatus = useSelector(getAuthStatus);
@@ -24,7 +26,9 @@ const Login = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        dispatch(login({ username, password })).unwrap()
+        dispatch(login({ username, password })).unwrap().catch((error) => {
+            setError(error.message);
+        });
     };
 
     return <>
@@ -53,7 +57,11 @@ const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 </Form.Group>
-
+                {
+                    error ? <Alert key="alert-error" variant='danger'>
+                        {error}
+                    </Alert> : ''
+                }
                 <Button variant="primary" type="submit" className="w-100">
                 Login
                 </Button>

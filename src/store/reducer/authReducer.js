@@ -1,10 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-axios.defaults.withCredentials = true; // for all requests
+import { ENDPOINT, axiosBackendInstance } from "./endpoint";
 
-const STATUS_URL = 'http://localhost:8080/api/auth/status';
-const LOGIN_URL = 'http://localhost:8080/api/auth/login';
-const LOGOUT_URL = 'http://localhost:8080/api/auth/logout';
+const axiosInstance = axiosBackendInstance();
 
 const initialState = {
     data: {
@@ -18,17 +15,21 @@ const initialState = {
 }
 
 export const fetchAuthStatus = createAsyncThunk('auth/fetchAuthStatus', async () => {
-    const response = await axios.get(STATUS_URL)
+    const response = await axiosInstance.get(ENDPOINT.STATUS_URL)
     return response.data
 })
 
-export const login = createAsyncThunk('auth/login', async (payload) => {
-    const response = await axios.post(LOGIN_URL, payload)
-    return response.data
+export const login = createAsyncThunk('auth/login', async (payload, { rejectWithValue }) => {
+    try {
+        const response = await axiosInstance.post(ENDPOINT.LOGIN_URL, payload);
+        return response.data;
+    } catch (error) {
+        return rejectWithValue(error.response.data);
+    }
 })
 
 export const logout = createAsyncThunk('auth/logout', async () => {
-    const response = await axios.post(LOGOUT_URL)
+    const response = await axiosInstance.post(ENDPOINT.LOGOUT_URL)
     return response.data
 })
 
@@ -82,6 +83,10 @@ const auth = createSlice({
                 }
 
                 state.data = loadedStatus
+            })
+            .addCase(login.rejected, (state, action) => {
+                state.status = 'failed'
+                state.error = action.payload
             })
             .addCase(logout.fulfilled, (state, action) => {
                 state.status = 'loggedout'
