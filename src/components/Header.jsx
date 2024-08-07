@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import {
   getAuthStatus,
+  getActiveUser,
   logout,
 } from '../store/reducer/authReducer';
 
@@ -18,6 +19,7 @@ const Header = () => {
     const navigate = useNavigate();
 
     const authStatus = useSelector(getAuthStatus);
+    const activeUser = useSelector(getActiveUser);
 
     useEffect(() => {
       if (authStatus === 'loggedout') {
@@ -37,9 +39,9 @@ const Header = () => {
         <Nav className="me-auto">
           <Nav.Link onClick={() => navigate('/dashboard')}>Dashboard</Nav.Link>
           <Nav.Link onClick={() => navigate('/deposite')}>Setoran</Nav.Link>
-          <NavDropdown title="Master" id="basic-nav-dropdown">
+          {activeUser.role === 'AM_PPN' ? <NavDropdown title="Master" id="basic-nav-dropdown">
             <NavDropdown.Item onClick={() => navigate('/user')}>Pengguna</NavDropdown.Item>
-          </NavDropdown>
+          </NavDropdown> : <></>}
         </Nav>
       </Navbar.Collapse>
     </Container>

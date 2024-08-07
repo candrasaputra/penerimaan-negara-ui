@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 
-import { Card, Table, Row, Col } from 'react-bootstrap';
-import { useParams } from "react-router-dom";
+import { Card, Table, Row, Col, Button } from 'react-bootstrap';
+import { useParams, useNavigate } from "react-router-dom";
 
 import {
     fetchUser,
@@ -12,6 +12,7 @@ import {
 const UserDetail = () => {
     const dispatch = useDispatch();
     const user = useSelector(getSingleUsers);
+    const navigate = useNavigate();
     const { id } = useParams();
 
     useEffect(() => {
@@ -50,7 +51,6 @@ const UserDetail = () => {
                                     <tr>
                                         <th>#</th>
                                         <th>Lokasi</th>
-                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -62,7 +62,6 @@ const UserDetail = () => {
                                             return <tr>
                                                     <td>{i + 1}</td>
                                                     <td>{el.district.name}</td>
-                                                    <td></td>
                                                 </tr>
                                             }) : ''
                                     }
