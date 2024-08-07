@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import {
     fetchDeposites,
+    deleteDeposite,
     getAllDeposites
 } from '../../store/reducer/depositeReducer';
 
@@ -17,6 +18,12 @@ const Deposite = () => {
     useEffect(() => {
         dispatch(fetchDeposites()).unwrap();
     }, []);
+
+    const handleDelete = (id) => {
+        dispatch(deleteDeposite(id)).unwrap().then((result) => {
+            dispatch(fetchDeposites()).unwrap();
+        });
+    };
 
     return <>
         <Button variant='primary' className="mb-3" onClick={() => navigate('/deposite/add')}>+ Tambah Storan Bulanan</Button>
@@ -50,7 +57,7 @@ const Deposite = () => {
                                         <td>
                                             <Button variant='info' size="sm" className="m-1" onClick={() => navigate(`/deposite/${el.id}/detail`)}>Detail</Button>
                                             <Button variant='success' size="sm" onClick={() => navigate(`/deposite/${el.id}/edit`)}>Ubah</Button>
-                                            <Button variant='danger' size="sm" className="m-1">Hapus</Button>
+                                            <Button variant='danger' size="sm" className="m-1" onClick={() => handleDelete(el.id)}>Hapus</Button>
                                         </td>
                                     </tr>
                                 })

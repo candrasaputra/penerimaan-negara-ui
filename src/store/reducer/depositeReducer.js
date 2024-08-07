@@ -38,6 +38,15 @@ export const updateDeposite = createAsyncThunk('deposites/updateDeposite', async
     }
 });
 
+export const deleteDeposite = createAsyncThunk('deposites/updateDeposite', async (id, { rejectWithValue }) => {
+    try {
+        const response = await axiosInstance.delete(`${ENDPOINT.DEPOSITE}/${id}`)
+        return response.data
+    } catch (error) {
+        return rejectWithValue(error.response.data);
+    }
+});
+
 const depositesSlice = createSlice({
     name: 'deposites',
     initialState,
