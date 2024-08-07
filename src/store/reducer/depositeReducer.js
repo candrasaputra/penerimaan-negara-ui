@@ -6,9 +6,15 @@ const axiosInstance = axiosBackendInstance();
 const initialState = {
     deposites: [],
     deposite: {},
+    depositemonthly: [],
     status: 'idle', //'idle' | 'loading' | 'succeeded' | 'failed' 
     error: null
 }
+
+export const fetchDepositeMonthly = createAsyncThunk('deposites/fetchDepositeMonthly', async (year) => {
+    const response = await axiosInstance.get(`${ENDPOINT.DEPOSITE}/deposite-monthly?year=${year}`)
+    return response.data
+});
 
 export const fetchDeposites = createAsyncThunk('deposites/fetchDeposites', async () => {
     const response = await axiosInstance.get(ENDPOINT.DEPOSITE)
@@ -94,6 +100,18 @@ const depositesSlice = createSlice({
                 state.status = 'failed'
                 state.error = action.error.message
             })
+            .addCase(fetchDepositeMonthly.pending, (state, action) => {
+                state.status = 'loading'
+            })
+            .addCase(fetchDepositeMonthly.fulfilled, (state, action) => {
+                state.status = 'succeeded'
+
+                state.depositemonthly = action.payload
+            })
+            .addCase(fetchDepositeMonthly.rejected, (state, action) => {
+                state.status = 'failed'
+                state.error = action.error.message
+            })
     }
 })
 
@@ -101,6 +119,7 @@ export const getAllDeposites = (state) => state.deposites.deposites;
 export const getSingleDeposites = (state) => state.deposites.deposite;
 export const getDepositesStatus = (state) => state.deposites.status;
 export const getDepositesError = (state) => state.deposites.error;
+export const getDepositesmonthly = (state) => state.deposites.depositemonthly;
 
 export const { depositeAdded } = depositesSlice.actions;
 

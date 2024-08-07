@@ -24,3 +24,7 @@ export const getMonth = (input): number => {
 export const getLastDateOfMonth = (year: number, month: number) => {
     return new Date(year, month + 1, 0).getDate();
 }
+
+export const numberToMonth = (number) => {
+    return ['', 'JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGUST', 'SEP', 'OKT', 'NOV', 'DES'][number];
+}

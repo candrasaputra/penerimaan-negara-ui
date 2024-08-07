@@ -20,7 +20,7 @@ import {
     getAllSourceofrevenues
 } from '../../store/reducer/sourceOfRevenueReducer.js';
 
-import { generateYears, getYear, getMonth, getLastDateOfMonth } from '../helper/date.ts';
+import { generateYears, getYear, getMonth, getLastDateOfMonth } from '../../helper/date.ts';
 
 const DepositeEdit = () => {
     const dispatch = useDispatch();
