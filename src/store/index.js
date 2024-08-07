@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from './reducer/authReducer';
 import depositeReducer from './reducer/depositeReducer';
 import userdistrictsReducer from './reducer/userDistrictReducer';
+import sourceofrevenuesReducer from './reducer/sourceOfRevenueReducer';
 
 export const store = configureStore({
     reducer: {
         activeUser: authReducer,
         deposites: depositeReducer,
-        userdistricts: userdistrictsReducer
+        userdistricts: userdistrictsReducer,
+        sourceofrevenues: sourceofrevenuesReducer
     }
 });

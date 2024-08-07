@@ -79,7 +79,7 @@ const userdistrictsSlice = createSlice({
     }
 })
 
-export const getAlluserdistricts = (state) => state.userdistricts.userdistricts;
+export const getAllUserdistricts = (state) => state.userdistricts.userdistricts;
 export const getSingleuserdistricts = (state) => state.userdistricts.userdistrict;
 export const getuserdistrictsStatus = (state) => state.userdistricts.status;
 export const getuserdistrictsError = (state) => state.userdistricts.error;

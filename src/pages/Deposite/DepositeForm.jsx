@@ -1,25 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 
-import { Card, Form, Row, Button, Col } from 'react-bootstrap';
-import { useParams } from "react-router-dom";
+import { Card, Form, Row, Button, Col, Alert } from 'react-bootstrap';
+import { useParams, useNavigate } from "react-router-dom";
 
 import {
-    fetchDeposite,
-    getSingleDeposites
+    addNewDeposite
 } from '../../store/reducer/depositeReducer';
 
 import {
     fetchUserdistricts,
-    getAlluserdistricts
+    getAllUserdistricts
 } from '../../store/reducer/userDistrictReducer';
+
+import {
+    fetchSourceofrevenues,
+    getAllSourceofrevenues
+} from '../../store/reducer/sourceOfRevenueReducer';
 
 import { generateYears, getYear, getMonth, getLastDateOfMonth } from './../helper/date.ts';
 
 const Deposite = () => {
     const dispatch = useDispatch();
-    const userdistricts = useSelector(getAlluserdistricts);
+    const userdistricts = useSelector(getAllUserdistricts);
+    const sourceofrevenues = useSelector(getAllSourceofrevenues);
+    const navigate = useNavigate();
 
+    const [error, setError] = useState('');
     const [district, setDistrict] = useState();
     const [sourceOfRevenue, setSourceOfRevenue] = useState();
     const [amount, setAmount] = useState();
@@ -30,16 +37,31 @@ const Deposite = () => {
 
     useEffect(() => {
         dispatch(fetchUserdistricts()).unwrap();
+        dispatch(fetchSourceofrevenues()).unwrap();
     }, []);
 
     useEffect(() => {
         setDate(`${year}-${month}-${getLastDateOfMonth(year, month)}`);
     }, [month, year])
 
+    const CAN_SAVE = district && sourceOfRevenue && amount && date;
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        dispatch(addNewDeposite({ district, source_of_revenue: sourceOfRevenue, amount, date })).unwrap()
+        .then((result) => {
+            navigate(`/deposite/${result.id}`)
+        })
+        .catch((error) => {
+            setError(error.message);
+        });
+    };
+
     return <Card>
         <Card.Header>Setoran</Card.Header>
         <Card.Body>
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm="2">
                         Lokasi
@@ -60,9 +82,9 @@ const Deposite = () => {
                     <Col sm="10">
                         <Form.Select aria-label="Default select" onChange={(e) => setSourceOfRevenue(e.target.value)}>
                             <option>Pilih Sumber Pendapatan</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            {
+                                sourceofrevenues.map(el => (<option value={el.id}>{el.name}</option>))
+                            }
                         </Form.Select>
                     </Col>
                 </Form.Group>
@@ -81,7 +103,6 @@ const Deposite = () => {
                     </Form.Label>
                     <Col sm="10">
                         <Form.Select aria-label="Default select" defaultValue={getMonth()} onChange={(e) => setMonth(e.target.value)}>
-                            <option>Pilih Bulan</option>
                             <option value="1" >Januari</option>
                             <option value="2">Februari</option>
                             <option value="3">Maret</option>
@@ -104,15 +125,18 @@ const Deposite = () => {
                     </Form.Label>
                     <Col sm="10">
                         <Form.Select aria-label="Default select" defaultValue={getYear()} onChange={(e) => setYear(e.target.value)}>
-                            <option>Pilih Tahun</option>
                             {
                                 generateYears().map(el => <option value={el}>{el}</option>)
                             }
                         </Form.Select>
                     </Col>
                 </Form.Group>
-
-                <Button>Simpan</Button>
+                {
+                    error ? <Alert key="alert-error" variant='danger'>
+                        {error}
+                    </Alert> : ''
+                }
+                <Button type="submit" disabled={!CAN_SAVE}>Simpan</Button>
             </Form>
         </Card.Body>
     </Card>
