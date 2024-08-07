@@ -22,7 +22,7 @@ import {
 
 import { generateYears, getYear, getMonth, getLastDateOfMonth } from '../helper/date.ts';
 
-const Deposite = () => {
+const DepositeEdit = () => {
     const dispatch = useDispatch();
     const userdistricts = useSelector(getAllUserdistricts);
     const sourceofrevenues = useSelector(getAllSourceofrevenues);
@@ -158,4 +158,4 @@ const Deposite = () => {
     </Card>
 }
 
-export default Deposite;
+export default DepositeEdit;

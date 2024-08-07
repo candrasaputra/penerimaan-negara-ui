@@ -13,4 +13,5 @@ export const ENDPOINT = {
     DEPOSITE: 'deposite',
     USER_DISTRICT: 'user-district',
     SOURCE_OF_REVENUE: 'source-of-revenue',
+    USER: 'user',
 }

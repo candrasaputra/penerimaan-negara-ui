@@ -9,7 +9,7 @@ import {
     getSingleDeposites
 } from '../../store/reducer/depositeReducer';
 
-const Deposite = () => {
+const DepositeDetail = () => {
     const dispatch = useDispatch();
     const deposite = useSelector(getSingleDeposites);
     const { id } = useParams();
@@ -53,8 +53,8 @@ const Deposite = () => {
                                 </Table>
                             </Col>
                         </Row>
-                        <h4>Alokasi</h4>
 
+                        <h4>Alokasi</h4>
                         <Table striped bordered hover>
                                 <thead>
                                     <tr>
@@ -80,4 +80,4 @@ const Deposite = () => {
     </> : <></>
 }
 
-export default Deposite;
+export default DepositeDetail;

@@ -8,6 +8,9 @@ import Deposite from './pages/Deposite/Index';
 import DepositeDetail from './pages/Deposite/DepositeDetail';
 import DepositeAdd from './pages/Deposite/DepositeAdd';
 import DepositeEdit from './pages/Deposite/DepositeEdit';
+import UserDetail from './pages/User/UserDetail';
+import UserAdd from './pages/User/UserAdd';
+import UserEdit from './pages/User/UserEdit';
 import NoMatch from "./pages/NoMatch";
 
 import LoginLayout from './layout/LoginLayout';
@@ -63,7 +66,19 @@ function App() {
         
         <Route path="/user/add" element={
             <DashboardLayout>
-              <User />
+              <UserAdd />
+            </DashboardLayout>
+          }/>
+
+          <Route path="/user/:id/edit" element={
+            <DashboardLayout>
+              <UserEdit />
+            </DashboardLayout>
+          }/>
+
+          <Route path="/user/:id/detail" element={
+            <DashboardLayout>
+              <UserDetail />
             </DashboardLayout>
           }/>
         
