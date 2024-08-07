@@ -12,7 +12,7 @@ import UserDetail from './pages/User/UserDetail';
 import UserAdd from './pages/User/UserAdd';
 import UserEdit from './pages/User/UserEdit';
 import NoMatch from "./pages/NoMatch";
-
+import SummaryDeposite from './pages/SummaryDeposite/Index';
 import LoginLayout from './layout/LoginLayout';
 import DashboardLayout from './layout/DashboardLayout';
 
@@ -79,6 +79,12 @@ function App() {
           <Route path="/user/:id/detail" element={
             <DashboardLayout>
               <UserDetail />
+            </DashboardLayout>
+          }/>
+
+          <Route path="/report/summary-deposite" element={
+            <DashboardLayout>
+              <SummaryDeposite />
             </DashboardLayout>
           }/>
         

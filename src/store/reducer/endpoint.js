@@ -14,4 +14,5 @@ export const ENDPOINT = {
     DISTRICT: 'district',
     SOURCE_OF_REVENUE: 'source-of-revenue',
     USER: 'user',
+    REPORT: 'report',
 }

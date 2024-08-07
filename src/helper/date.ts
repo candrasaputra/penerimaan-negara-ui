@@ -9,13 +9,13 @@ export const generateYears = () => {
     return years;
 }
 
-export const getYear = (input): number => {
+export const getYear = (input = null): number => {
     const date = input ? new Date(input) : new Date();
 
     return date.getFullYear();
 }
 
-export const getMonth = (input): number => {
+export const getMonth = (input = null): number => {
     const date = input ? new Date(input) : new Date();
 
     return date.getMonth();

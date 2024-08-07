@@ -25,32 +25,32 @@ const Dashboard = () => {
     }, [year]);
 
     return <>
-    <Card>
-        <Card.Header>Dashboard</Card.Header>
-        <Card.Body>
-            <DepositeMonthlyChart title="Total Setoran Perbulan" data={chartData} />
-        </Card.Body>
+            <Card>
+                <Card.Header>Dashboard</Card.Header>
+                <Card.Body>
+                    <DepositeMonthlyChart title="Total Setoran Perbulan" data={chartData} />
+                    <Container>
+                        <Row className="justify-content-md-center">
+                            <Col lg="4">
+                                <Form.Group as={Col} className="mb-3">
+                                    <Form.Label >
+                                        <strong>Tahun</strong>
+                                    </Form.Label>
+                                    <Col sm="10">
+                                        <Form.Select aria-label="Default select" value={year} defaultValue={getYear()} onChange={(e) => setYear(e.target.value)}>
+                                            {
+                                                generateYears().map(el => <option value={el}>{el}</option>)
+                                            }
+                                        </Form.Select>
+                                    </Col>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                    </Container>
+                </Card.Body>
 
-        <Container>
-            <Row className="justify-content-md-center">
-                <Col lg="4">
-                    <Form.Group as={Col} className="mb-3">
-                        <Form.Label >
-                            <strong>Tahun</strong>
-                        </Form.Label>
-                        <Col sm="10">
-                            <Form.Select aria-label="Default select" value={year} defaultValue={getYear()} onChange={(e) => setYear(e.target.value)}>
-                                {
-                                    generateYears().map(el => <option value={el}>{el}</option>)
-                                }
-                            </Form.Select>
-                        </Col>
-                    </Form.Group>
-                </Col>
-            </Row>
-        </Container>
-    </Card>
-</>
+            </Card>
+        </>
 }
 
 export default Dashboard;
