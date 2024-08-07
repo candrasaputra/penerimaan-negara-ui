@@ -11,7 +11,7 @@ export const ENDPOINT = {
     LOGOUT_URL: 'auth/logout',
 
     DEPOSITE: 'deposite',
-    USER_DISTRICT: 'user-district',
+    DISTRICT: 'district',
     SOURCE_OF_REVENUE: 'source-of-revenue',
     USER: 'user',
 }

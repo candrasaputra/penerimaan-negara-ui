@@ -9,9 +9,9 @@ import {
 } from '../../store/reducer/depositeReducer.js';
 
 import {
-    fetchUserdistricts,
-    getAllUserdistricts
-} from '../../store/reducer/userDistrictReducer.js';
+    fetchDistricts,
+    getAllDistricts
+} from '../../store/reducer/districtReducer.js';
 
 import {
     fetchSourceofrevenues,
@@ -22,7 +22,7 @@ import { generateYears, getYear, getMonth, getLastDateOfMonth } from '../helper/
 
 const DepositeAdd = () => {
     const dispatch = useDispatch();
-    const userdistricts = useSelector(getAllUserdistricts);
+    const districts = useSelector(getAllDistricts);
     const sourceofrevenues = useSelector(getAllSourceofrevenues);
     const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ const DepositeAdd = () => {
     const [year, setYear] = useState(getYear());
 
     useEffect(() => {
-        dispatch(fetchUserdistricts()).unwrap();
+        dispatch(fetchDistricts()).unwrap();
         dispatch(fetchSourceofrevenues()).unwrap();
     }, []);
 
@@ -70,7 +70,7 @@ const DepositeAdd = () => {
                         <Form.Select aria-label="Default select" onChange={(e) => setDistrict(e.target.value)}>
                             <option>Pilih lokasi</option>
                             {
-                                userdistricts.map(el => (<option value={el.district.id}>{el.district.name}</option>))
+                                districts.map(el => (<option value={el.id}>{el.name}</option>))
                             }
                         </Form.Select>
                     </Col>
