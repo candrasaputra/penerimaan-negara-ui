@@ -40,7 +40,8 @@ const Header = () => {
           <Nav.Link onClick={() => navigate('/dashboard')}>Dashboard</Nav.Link>
           <Nav.Link onClick={() => navigate('/deposite')}>Setoran</Nav.Link>
           <NavDropdown title="Laporan" id="basic-nav-dropdown">
-            <NavDropdown.Item onClick={() => navigate('/report/summary-deposite')}>Lamporan Summary Storan</NavDropdown.Item>
+            <NavDropdown.Item onClick={() => navigate('/report/summary-deposite')}>Lamporan Summary Setoran</NavDropdown.Item>
+            <NavDropdown.Item onClick={() => navigate('/report/summary-breakdown')}>Report Rekapitulasi Penerimaan Negara</NavDropdown.Item>
           </NavDropdown>
           {activeUser.role === 'AM_PPN' ? <NavDropdown title="Master" id="basic-nav-dropdown">
             <NavDropdown.Item onClick={() => navigate('/user')}>Pengguna</NavDropdown.Item>

@@ -13,6 +13,7 @@ import UserAdd from './pages/User/UserAdd';
 import UserEdit from './pages/User/UserEdit';
 import NoMatch from "./pages/NoMatch";
 import SummaryDeposite from './pages/SummaryDeposite/Index';
+import SummaryBreakdown from './pages/SummaryBreakdown/Index';
 import LoginLayout from './layout/LoginLayout';
 import DashboardLayout from './layout/DashboardLayout';
 
@@ -85,6 +86,12 @@ function App() {
           <Route path="/report/summary-deposite" element={
             <DashboardLayout>
               <SummaryDeposite />
+            </DashboardLayout>
+          }/>
+
+          <Route path="/report/summary-breakdown" element={
+            <DashboardLayout>
+              <SummaryBreakdown />
             </DashboardLayout>
           }/>
         

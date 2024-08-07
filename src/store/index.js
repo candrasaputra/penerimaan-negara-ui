@@ -5,6 +5,7 @@ import districtsReducer from './reducer/districtReducer';
 import sourceofrevenuesReducer from './reducer/sourceOfRevenueReducer';
 import usersReducer from './reducer/userReducer';
 import reportsReducer from './reducer/reportReducer';
+import depositeareasReducer from './reducer/depositeAreaReducer';
 
 export const store = configureStore({
     reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
         districts: districtsReducer,
         sourceofrevenues: sourceofrevenuesReducer,
         users: usersReducer,
-        reports: reportsReducer
+        reports: reportsReducer,
+        depositeareas: depositeareasReducer
     }
 });
