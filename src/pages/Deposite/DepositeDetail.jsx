@@ -65,9 +65,9 @@ const Deposite = () => {
                                 </thead>
                                 <tbody>
                                     {
-                                        deposite.breakdown ? deposite.breakdown.map(el => {
+                                        deposite.breakdown ? deposite.breakdown.map((el, i) => {
                                             return <tr>
-                                                    <td>1</td>
+                                                    <td>{i + 1}</td>
                                                     <td>{el.deposite_area.name}</td>
                                                     <td>{new Intl.NumberFormat('id-ID').format(el.amount)}</td>
                                                 </tr>

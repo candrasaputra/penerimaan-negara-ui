@@ -29,6 +29,15 @@ export const addNewDeposite = createAsyncThunk('deposites/addNewDeposite', async
     }
 });
 
+export const updateDeposite = createAsyncThunk('deposites/updateDeposite', async (initialPost, { rejectWithValue }) => {
+    try {
+        const response = await axiosInstance.patch(`${ENDPOINT.DEPOSITE}/${initialPost.id}`, initialPost.payload)
+        return response.data
+    } catch (error) {
+        return rejectWithValue(error.response.data);
+    }
+});
+
 const depositesSlice = createSlice({
     name: 'deposites',
     initialState,

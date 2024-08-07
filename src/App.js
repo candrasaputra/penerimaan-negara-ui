@@ -6,7 +6,8 @@ import Dashboard from "./pages/Dashboard/Index";
 import User from "./pages/User/Index";
 import Deposite from './pages/Deposite/Index';
 import DepositeDetail from './pages/Deposite/DepositeDetail';
-import DepositeForm from './pages/Deposite/DepositeForm';
+import DepositeAdd from './pages/Deposite/DepositeAdd';
+import DepositeEdit from './pages/Deposite/DepositeEdit';
 import NoMatch from "./pages/NoMatch";
 
 import LoginLayout from './layout/LoginLayout';
@@ -38,11 +39,17 @@ function App() {
 
           <Route path="/deposite/add" element={
             <DashboardLayout>
-              <DepositeForm />
+              <DepositeAdd />
             </DashboardLayout>
           }/>
 
-          <Route path="/deposite/:id" element={
+          <Route path="/deposite/:id/edit" element={
+            <DashboardLayout>
+              <DepositeEdit />
+            </DashboardLayout>
+          }/>
+
+          <Route path="/deposite/:id/detail" element={
             <DashboardLayout>
               <DepositeDetail />
             </DashboardLayout>

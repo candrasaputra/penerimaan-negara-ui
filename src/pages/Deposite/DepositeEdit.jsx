@@ -2,33 +2,38 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 
 import { Card, Form, Row, Button, Col, Alert } from 'react-bootstrap';
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import {
-    addNewDeposite
+    updateDeposite,
+    fetchDeposite,
+    getSingleDeposites
 } from '../../store/reducer/depositeReducer';
 
 import {
     fetchUserdistricts,
     getAllUserdistricts
-} from '../../store/reducer/userDistrictReducer';
+} from '../../store/reducer/userDistrictReducer.js';
 
 import {
     fetchSourceofrevenues,
     getAllSourceofrevenues
-} from '../../store/reducer/sourceOfRevenueReducer';
+} from '../../store/reducer/sourceOfRevenueReducer.js';
 
-import { generateYears, getYear, getMonth, getLastDateOfMonth } from './../helper/date.ts';
+import { generateYears, getYear, getMonth, getLastDateOfMonth } from '../helper/date.ts';
 
 const Deposite = () => {
     const dispatch = useDispatch();
     const userdistricts = useSelector(getAllUserdistricts);
     const sourceofrevenues = useSelector(getAllSourceofrevenues);
     const navigate = useNavigate();
+    const { id } = useParams();
+
+    const deposite = useSelector(getSingleDeposites);
 
     const [error, setError] = useState('');
-    const [district, setDistrict] = useState();
-    const [sourceOfRevenue, setSourceOfRevenue] = useState();
+    const [district, setDistrict] = useState('');
+    const [sourceOfRevenue, setSourceOfRevenue] = useState('');
     const [amount, setAmount] = useState();
 
     const [date, setDate] = useState();
@@ -36,8 +41,19 @@ const Deposite = () => {
     const [year, setYear] = useState(getYear());
 
     useEffect(() => {
+        if (deposite) {
+            setDistrict(deposite?.district?.id);
+            setSourceOfRevenue(deposite?.source_of_revenue?.id);
+            setAmount(deposite?.amount);
+            setMonth(getMonth(deposite?.date));
+            setYear(getYear(deposite?.date));
+        }
+    }, [deposite]);
+
+    useEffect(() => {
         dispatch(fetchUserdistricts()).unwrap();
         dispatch(fetchSourceofrevenues()).unwrap();
+        dispatch(fetchDeposite(id)).unwrap();
     }, []);
 
     useEffect(() => {
@@ -49,9 +65,9 @@ const Deposite = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        dispatch(addNewDeposite({ district, source_of_revenue: sourceOfRevenue, amount, date })).unwrap()
+        dispatch(updateDeposite({ id, payload: {district, source_of_revenue: sourceOfRevenue, amount, date} })).unwrap()
         .then((result) => {
-            navigate(`/deposite/${result.id}`)
+            navigate(`/deposite/${id}/detail`)
         })
         .catch((error) => {
             setError(error.message);
@@ -59,7 +75,7 @@ const Deposite = () => {
     };
 
     return <Card>
-        <Card.Header>Setoran</Card.Header>
+        <Card.Header>Form Ubah Setoran</Card.Header>
         <Card.Body>
             <Form onSubmit={handleSubmit}>
                 <Form.Group as={Row} className="mb-3">
@@ -67,7 +83,7 @@ const Deposite = () => {
                         Lokasi
                     </Form.Label>
                     <Col sm="10">
-                        <Form.Select aria-label="Default select" onChange={(e) => setDistrict(e.target.value)}>
+                        <Form.Select aria-label="Default select" onChange={(e) => setDistrict(e.target.value)} value={district}>
                             <option>Pilih lokasi</option>
                             {
                                 userdistricts.map(el => (<option value={el.district.id}>{el.district.name}</option>))
@@ -80,7 +96,7 @@ const Deposite = () => {
                         Sumber Pendapatan
                     </Form.Label>
                     <Col sm="10">
-                        <Form.Select aria-label="Default select" onChange={(e) => setSourceOfRevenue(e.target.value)}>
+                        <Form.Select aria-label="Default select" onChange={(e) => setSourceOfRevenue(e.target.value)} value={sourceOfRevenue}>
                             <option>Pilih Sumber Pendapatan</option>
                             {
                                 sourceofrevenues.map(el => (<option value={el.id}>{el.name}</option>))
@@ -93,16 +109,16 @@ const Deposite = () => {
                     Nominal
                     </Form.Label>
                     <Col sm="10">
-                    <Form.Control type="text" onChange={(e) => setAmount(e.target.value)} />
+                    <Form.Control type="text" value={amount} onChange={(e) => setAmount(e.target.value)} />
                     </Col>
                 </Form.Group>
 
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm="2">
-                        Sumber Pendapatan
+                        Bulan
                     </Form.Label>
                     <Col sm="10">
-                        <Form.Select aria-label="Default select" defaultValue={getMonth()} onChange={(e) => setMonth(e.target.value)}>
+                        <Form.Select aria-label="Default select" value={month} defaultValue={getMonth()} onChange={(e) => setMonth(e.target.value)}>
                             <option value="1" >Januari</option>
                             <option value="2">Februari</option>
                             <option value="3">Maret</option>
@@ -121,10 +137,10 @@ const Deposite = () => {
 
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm="2">
-                        Sumber Pendapatan
+                        Tahun
                     </Form.Label>
                     <Col sm="10">
-                        <Form.Select aria-label="Default select" defaultValue={getYear()} onChange={(e) => setYear(e.target.value)}>
+                        <Form.Select aria-label="Default select" value={year} defaultValue={getYear()} onChange={(e) => setYear(e.target.value)}>
                             {
                                 generateYears().map(el => <option value={el}>{el}</option>)
                             }
