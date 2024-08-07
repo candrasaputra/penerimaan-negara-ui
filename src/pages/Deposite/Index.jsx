@@ -19,7 +19,7 @@ const Deposite = () => {
     }, []);
 
     return <>
-        <Button variant='primary' className="mb-3">+ Tambah Storan Bulanan</Button>
+        <Button variant='primary' className="mb-3" onClick={() => navigate('/deposite/add')}>+ Tambah Storan Bulanan</Button>
         <Card>
             <Card.Header>Daftar Setoran</Card.Header>
             <Card.Body>

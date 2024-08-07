@@ -11,4 +11,5 @@ export const ENDPOINT = {
     LOGOUT_URL: 'auth/logout',
 
     DEPOSITE: 'deposite',
+    USER_DISTRICT: 'user-district',
 }
